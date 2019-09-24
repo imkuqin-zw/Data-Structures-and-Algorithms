@@ -1,6 +1,9 @@
 package BTree
 
-import "test/stack"
+import (
+	"github.com/imkuqin-zw/Data-Structures-and-Algorithms/queue"
+	"github.com/imkuqin-zw/Data-Structures-and-Algorithms/stack"
+)
 
 type BNode struct {
 	Data                   interface{}
@@ -74,6 +77,7 @@ func (b *BNode) afterAlongLeftBranch(out []interface{}, stack *stack.Stack) {
 	for cur != nil {
 		if cur.LChild == nil && cur.RChild == nil {
 			out = append(out, cur.Data)
+			break
 		}
 		if cur.RChild != nil {
 			stack.Push(cur.RChild)
@@ -98,6 +102,23 @@ func (b *BNode) PostOrderTraversal() []interface{} {
 			break
 		}
 		root = nodeStack.Top().(*BNode)
+	}
+	return out
+}
+
+func (b *BNode) LevelTraversal() []interface{} {
+	out := make([]interface{}, 0)
+	que := queue.NewQueue()
+	que.Enqueue(b)
+	for !que.Empty() {
+		node := que.Dequeue().(*BNode)
+		out = append(out, node.Data)
+		if node.LChild != nil {
+			que.Enqueue(node.LChild)
+		}
+		if node.RChild != nil {
+			que.Enqueue(node.RChild)
+		}
 	}
 	return out
 }

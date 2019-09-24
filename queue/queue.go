@@ -45,9 +45,9 @@ func (q *Queue) Enqueue(val interface{}) {
 }
 
 //对头删除
-func (q *Queue) Dequeue() {
+func (q *Queue) Dequeue() interface{} {
 	if q.front == nil {
-		return
+		return nil
 	}
 	node := q.front
 	q.front = node.next
@@ -56,6 +56,7 @@ func (q *Queue) Dequeue() {
 		q.rear = q.front
 	}
 	q.length--
+	return node.Data
 }
 
 func (q *Queue) Empty() bool {
