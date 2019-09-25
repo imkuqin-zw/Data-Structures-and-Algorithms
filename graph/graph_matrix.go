@@ -1,41 +1,63 @@
 package graph
 
+import "test/queue"
+
 type Matrix struct {
 	v []*Vertex
 	e [][]*Edge
 	n int
 }
 
-func (m *Matrix) Vertex(i int) interface{} {
+func (m *Matrix) GetVertex(i int) interface{} {
 	return m.v[i].data
 }
 
-func (m *Matrix) InDegree(i int) int {
+func (m *Matrix) GetInDegree(i int) int {
 	return m.v[i].inDegree
 }
 
-func (m *Matrix) OutDegree(i int) int {
+func (m *Matrix) GetOutDegree(i int) int {
 	return m.v[i].outDegree
 }
 
-func (m *Matrix) Status(i int) VStatus {
+func (m *Matrix) GetStatus(i int) VStatus {
 	return m.v[i].status
 }
 
-func (m *Matrix) DTime(i int) int {
+func (m *Matrix) GetDTime(i int) int {
 	return m.v[i].dTime
 }
 
-func (m *Matrix) FTime(i int) int {
+func (m *Matrix) GetFTime(i int) int {
 	return m.v[i].fTime
 }
 
-func (m *Matrix) Parent(i int) int {
+func (m *Matrix) GetParent(i int) int {
 	return m.v[i].parent
 }
 
-func (m *Matrix) priority(i int) int {
+func (m *Matrix) GetPriority(i int) int {
 	return m.v[i].priority
+}
+
+func (m *Matrix) SetDTime(i, clock int) {
+	m.v[i].dTime = clock
+}
+
+func (m *Matrix) SetVStatus(i int, status VStatus) {
+	m.v[i].status = status
+}
+
+func (m *Matrix) GetVStatus(i int) VStatus {
+	return m.v[i].status
+}
+
+func (m *Matrix) SetEStatus(i, j int, status EStatus) {
+	m.e[i][j].status = status
+}
+
+func (m *Matrix) SetParent(i, parent int) {
+	m.v[i].parent = parent
 }
 
 func (m *Matrix) nextNbr(i, j int) int {
@@ -105,4 +127,41 @@ func (m *Matrix) VertexRemove(i int) *Vertex {
 	vBak := m.v[i]
 	m.v = append(m.v[:i], m.v[i+1:]...)
 	return vBak
+}
+
+// 广度优先遍历
+func (m *Matrix) bfs(i, clock int) {
+	que := queue.NewQueue()
+	m.SetVStatus(i, Discovered)
+	que.Enqueue(i)
+	for !que.Empty() {
+		v := que.Dequeue().(int)
+		clock++
+		m.SetDTime(v, clock)
+		for u := m.FirstBbr(v); -1 < u; u = m.nextNbr(v, u) {
+			if m.GetVStatus(u) == Undiscovered {
+				m.SetVStatus(u, Discovered)
+				que.Enqueue(u)
+				m.SetEStatus(v, u, Tree)
+				m.SetParent(u, v)
+			} else {
+				m.SetEStatus(v, u, Cross)
+			}
+		}
+		m.SetVStatus(i, Visited)
+	}
+}
+
+func (m *Matrix) BFS(i int) {
+	clock := 0
+	v := i
+	for {
+		if m.GetStatus(v) == Discovered {
+			m.bfs(v, clock)
+		}
+		v = (v + 1) % m.n
+		if v != i {
+			break
+		}
+	}
 }
