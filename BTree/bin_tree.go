@@ -2,7 +2,7 @@ package BTree
 
 import (
 	"github.com/imkuqin-zw/Data-Structures-and-Algorithms/queue"
-	"github.com/imkuqin-zw/Data-Structures-and-Algorithms/stack"
+	"github.com/imkuqin-zw/Data-Structures-and-Algorithms/stack/listStack"
 )
 
 type BNode struct {
@@ -17,7 +17,7 @@ func NewBNode(data interface{}) *BNode {
 	return &BNode{Data: data}
 }
 
-func (b *BNode) visitAlongLeftBranch(out []interface{}, stack *stack.Stack) {
+func (b *BNode) visitAlongLeftBranch(out []interface{}, stack *listStack.Stack) {
 	out = append(out, b.Data)
 	cur := b.LChild
 	for cur != nil {
@@ -33,7 +33,7 @@ func (b *BNode) PreOrderTraversal() []interface{} {
 	if b == nil {
 		return out
 	}
-	nodeStack := stack.NewStack()
+	nodeStack := listStack.NewStack()
 	root := b
 	for {
 		root.visitAlongLeftBranch(out, nodeStack)
@@ -45,7 +45,7 @@ func (b *BNode) PreOrderTraversal() []interface{} {
 	return out
 }
 
-func (b *BNode) goAlongLeftBranch(out []interface{}, stack *stack.Stack) {
+func (b *BNode) goAlongLeftBranch(out []interface{}, stack *listStack.Stack) {
 	cur := b
 	for cur != nil {
 		stack.Push(cur)
@@ -58,7 +58,7 @@ func (b *BNode) InOrderTraversal() []interface{} {
 	if b == nil {
 		return out
 	}
-	nodeStack := stack.NewStack()
+	nodeStack := listStack.NewStack()
 	root := b
 	for {
 		root.goAlongLeftBranch(out, nodeStack)
@@ -72,7 +72,7 @@ func (b *BNode) InOrderTraversal() []interface{} {
 	return out
 }
 
-func (b *BNode) afterAlongLeftBranch(out []interface{}, stack *stack.Stack) {
+func (b *BNode) afterAlongLeftBranch(out []interface{}, stack *listStack.Stack) {
 	cur := b
 	for cur != nil {
 		if cur.LChild == nil && cur.RChild == nil {
@@ -94,7 +94,7 @@ func (b *BNode) PostOrderTraversal() []interface{} {
 	if b == nil {
 		return out
 	}
-	nodeStack := stack.NewStack()
+	nodeStack := listStack.NewStack()
 	root := b
 	for {
 		root.afterAlongLeftBranch(out, nodeStack)

@@ -116,17 +116,17 @@ import (
 
 // // MyStack is
 // type MyStack struct {
-// 	data *list.List
+// 	data *listStack.List
 // }
 
 // /** Initialize your data structure here. */
 // func Constructor() MyStack {
-// 	return MyStack{data: list.New()}
+// 	return MyStack{data: listStack.New()}
 // }
 
 // /** Push element x onto stack. */
 // func (this *MyStack) Push(x int) {
-// 	tmp := list.New()
+// 	tmp := listStack.New()
 // 	tmp.PushFront(x)
 // 	for this.data.Len() != 0 {
 // 		tmp.PushFront(this.data.Back().Value)
@@ -156,17 +156,17 @@ import (
 // }
 
 // type MyQueue struct {
-// 	data *list.List
+// 	data *listStack.List
 // }
 
 // /** Initialize your data structure here. */
 // func Constructor() MyQueue {
-// 	return MyQueue{data: list.New()}
+// 	return MyQueue{data: listStack.New()}
 // }
 
 // /** Push element x to the back of queue. */
 // func (this *MyQueue) Push(x int) {
-// 	tmp := list.New()
+// 	tmp := listStack.New()
 // 	for this.data.Len() != 0 {
 // 		e := this.data.Front()
 // 		tmp.PushFront(e.Value)

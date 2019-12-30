@@ -266,7 +266,7 @@ func partition(head *ListNode, x int) *ListNode {
 	return p.Next
 }
 
-// Node is the one of the list
+// Node is the one of the listStack
 type Node struct {
 	Val    int
 	Next   *Node
