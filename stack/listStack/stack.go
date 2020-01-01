@@ -11,48 +11,6 @@ func NewNode(data interface{}) *Node {
 	return &Node{Data: data}
 }
 
-//
-//type Stack struct {
-//	top    *Node
-//	length int
-//}
-//
-//func NewStack() *Stack {
-//	return &Stack{}
-//}
-//
-//func (s *Stack) Length() int {
-//	return s.length
-//}
-//
-//func (s *Stack) Top() interface{} {
-//	if s.length == 0 {
-//		return nil
-//	}
-//	return s.top.Data
-//}
-//
-//func (s *Stack) Push(val interface{}) {
-//	node := NewNode(val)
-//	node.Next = s.top
-//	s.top = node
-//	s.length++
-//}
-//
-//func (s *Stack) Pop() {
-//	if s.length == 0 {
-//		return
-//	}
-//	node := s.top.Next
-//	s.top.Next = nil
-//	s.top = node
-//	s.length--
-//}
-//
-//func (s *Stack) IsEmpty() bool {
-//	return s.length == 0
-//}
-
 type Stack struct {
 	top    *Node
 	length int
@@ -81,7 +39,7 @@ func (s *Stack) Push(val interface{}) {
 	return
 }
 
-func (s *Stack) Pop() *Node {
+func (s *Stack) Pop() interface{} {
 	if s.top == nil {
 		return nil
 	}
@@ -90,5 +48,12 @@ func (s *Stack) Pop() *Node {
 	node.Next = nil
 	s.top = next
 	s.length--
-	return node
+	return node.Data
+}
+
+func (s *Stack) Top() interface{} {
+	if s.top == nil {
+		return nil
+	}
+	return s.top.Data
 }

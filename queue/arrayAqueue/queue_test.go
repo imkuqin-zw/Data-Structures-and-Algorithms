@@ -1,30 +1,26 @@
 package arrayAqueue
 
 import (
-	"fmt"
 	"testing"
 )
 
 func TestQueue_Dequeue(t *testing.T) {
 	fn := func(vals ...interface{}) {
-		s := NewQueue(5)
-		fmt.Println(s.cap)
+		s := NewQueue()
 		for _, val := range vals {
 			s.Enqueue(val)
 			s.Traversal()
 		}
-		fmt.Println("----------------------", s.cap)
 		for s.Dequeue() != nil {
 			s.Traversal()
 		}
-		fmt.Println(s.cap)
 	}
 	fn(1, 2, 3, 4, 5, 6)
 }
 
 func TestQueue_Enqueue(t *testing.T) {
 	fn := func(vals ...interface{}) {
-		s := NewQueue(5)
+		s := NewQueue()
 		for _, val := range vals {
 			s.Enqueue(val)
 		}

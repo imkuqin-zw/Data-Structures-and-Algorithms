@@ -1,57 +1,54 @@
 package arrayAqueue
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Queue struct {
-	cap   int
+	front int
 	rear  int
 	elems []interface{}
 }
 
-func NewQueue(cap int) *Queue {
+func NewQueue() *Queue {
 	return &Queue{
-		cap:   cap,
-		rear:  -1,
-		elems: make([]interface{}, cap),
+		elems: make([]interface{}, 0),
 	}
 }
 
-func (s *Queue) Enqueue(val interface{}) {
-	if s.rear+1 == s.cap {
-		if s.cap < 1000 {
-			s.cap *= 2
-		} else {
-			s.cap += 1000
-		}
-		elems := make([]interface{}, s.cap)
-		copy(elems, s.elems)
-		s.elems = elems
-	}
-	for i := s.rear; i > -1; i-- {
-		s.elems[i+1] = s.elems[i]
-	}
-	s.rear++
-	s.elems[0] = val
+func (q *Queue) IsEmpty() bool {
+	return q.front == q.rear
 }
 
-func (s *Queue) Dequeue() interface{} {
-	if s.rear == -1 {
+func (q *Queue) Size() int {
+	return q.rear - q.front
+}
+
+func (q *Queue) GetFront() interface{} {
+	if q.IsEmpty() {
 		return nil
 	}
-	val := s.elems[s.rear]
-	s.rear--
-	if s.rear < s.cap/2 {
-		s.cap /= 2
-		elems := make([]interface{}, s.cap)
-		copy(elems, s.elems)
-		s.elems = elems
+	return q.elems[q.front]
+}
+
+func (q *Queue) Enqueue(val interface{}) {
+	q.elems = append(q.elems, val)
+	q.rear++
+}
+
+func (q *Queue) Dequeue() interface{} {
+	if q.IsEmpty() {
+		return nil
 	}
+	val := q.elems[q.front]
+	q.elems = q.elems[1:]
+	q.rear--
 	return val
 }
 
-func (s *Queue) Traversal() {
-	for i := s.rear; i > -1; i-- {
-		fmt.Print(s.elems[i], " ")
+func (q *Queue) Traversal() {
+	for _, item := range q.elems {
+		fmt.Print(item, " ")
 	}
 	fmt.Println()
 }

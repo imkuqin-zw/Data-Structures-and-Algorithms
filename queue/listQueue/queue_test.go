@@ -1,4 +1,4 @@
-package queue
+package listQueue
 
 import (
 	"github.com/stretchr/testify/assert"

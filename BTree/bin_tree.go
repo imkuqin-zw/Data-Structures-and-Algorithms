@@ -1,7 +1,7 @@
 package BTree
 
 import (
-	"github.com/imkuqin-zw/Data-Structures-and-Algorithms/queue"
+	"github.com/imkuqin-zw/Data-Structures-and-Algorithms/queue/listQueue"
 	"github.com/imkuqin-zw/Data-Structures-and-Algorithms/stack/listStack"
 )
 
@@ -108,7 +108,7 @@ func (b *BNode) PostOrderTraversal() []interface{} {
 
 func (b *BNode) LevelTraversal() []interface{} {
 	out := make([]interface{}, 0)
-	que := queue.NewQueue()
+	que := listQueue.NewQueue()
 	que.Enqueue(b)
 	for !que.Empty() {
 		node := que.Dequeue().(*BNode)

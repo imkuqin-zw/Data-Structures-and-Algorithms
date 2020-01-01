@@ -1,4 +1,4 @@
-package queue
+package listQueue
 
 type Node struct {
 	Data interface{}
