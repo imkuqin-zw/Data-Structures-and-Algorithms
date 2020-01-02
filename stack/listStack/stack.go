@@ -57,3 +57,7 @@ func (s *Stack) Top() interface{} {
 	}
 	return s.top.Data
 }
+
+func (s *Stack) IsEmpty() bool {
+	return s.length == 0
+}

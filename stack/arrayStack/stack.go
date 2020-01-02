@@ -41,3 +41,7 @@ func (s *Stack) Top() interface{} {
 	}
 	return s.elems[s.size-1]
 }
+
+func (s *Stack) IsEmpty() bool {
+	return s.size == 0
+}
