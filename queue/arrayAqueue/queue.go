@@ -46,6 +46,10 @@ func (q *Queue) Dequeue() interface{} {
 	return val
 }
 
+func (q *Queue) List() []interface{} {
+	return q.elems
+}
+
 func (q *Queue) Traversal() {
 	for _, item := range q.elems {
 		fmt.Print(item, " ")

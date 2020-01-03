@@ -1,6 +1,8 @@
 package arrayStack
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Stack struct {
 	size  int
@@ -14,8 +16,8 @@ func NewStack() *Stack {
 }
 
 func (s *Stack) Traversal() {
-	for _, elem := range s.elems {
-		fmt.Print(elem, " ")
+	for i := s.size - 1; i >= 0; i-- {
+		fmt.Print(s.elems[i], " ")
 	}
 	fmt.Println()
 }

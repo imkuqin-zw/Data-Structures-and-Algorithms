@@ -1,5 +1,7 @@
 package listQueue
 
+import "fmt"
+
 type Node struct {
 	Data interface{}
 	next *Node
@@ -19,7 +21,7 @@ func NewQueue() *Queue {
 	return &Queue{}
 }
 
-func (q *Queue) Length() int {
+func (q *Queue) Size() int {
 	return q.length
 }
 
@@ -53,7 +55,7 @@ func (q *Queue) Dequeue() interface{} {
 	q.front = node.next
 	node.next = nil
 	if q.front == nil {
-		q.rear = q.front
+		q.rear = nil
 	}
 	q.length--
 	return node.Data
@@ -63,7 +65,16 @@ func (q *Queue) Empty() bool {
 	return q.length == 0
 }
 
-func (q *Queue) traversal() []interface{} {
+func (q *Queue) Traversal() {
+	cur := q.front
+	for cur != nil {
+		fmt.Print(cur.Data, " ")
+		cur = cur.next
+	}
+	fmt.Println()
+}
+
+func (q *Queue) List() []interface{} {
 	result := make([]interface{}, 0, q.length)
 	cur := q.front
 	for cur != nil {
