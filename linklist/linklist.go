@@ -180,6 +180,8 @@ func (l *LinkListH) InsertBack(val interface{}) {
 	node := &ListNode{Val: val}
 	if l.Next == nil {
 		l.Next = node
+		l.size++
+		return
 	}
 	cur := l.Next
 	for cur.Next != nil {
@@ -274,55 +276,42 @@ func (l *LinkListH) String() string {
 	return s.String()
 }
 
-//func RemoveDup(l *ListNode) {
-//	if l == nil || l.Next == nil {
-//		return
-//	}
-//
-//	for outCur := l.Next; outCur != nil; outCur = outCur.Next {
-//		for pre, cur := outCur, outCur.Next; cur != nil; cur = cur.Next {
-//			if outCur.Val == cur.Val {
-//				pre.Next = cur.Next
-//			} else {
-//				pre = cur
-//			}
-//		}
-//	}
-//	return
-//}
-//
-//func Add(l1, l2 *ListNode) *ListNode {
-//	l3 := new(ListNode)
-//	if l1 == nil || l2 == nil {
-//		l3.Next = &ListNode{Val: 0}
-//		return l3
-//	}
-//	cur, cur1, cur2 := l3, l1.Next, l2.Next
-//	c := 0
-//	for cur1 != nil && cur2 != nil {
-//		sum := cur1.Val.(int) + cur2.Val.(int) + c
-//		cur.Next = &ListNode{Val: sum % 10}
-//		cur = cur.Next
-//		c = sum / 10
-//		cur1 = cur1.Next
-//		cur2 = cur2.Next
-//	}
-//	for cur1 != nil {
-//		sum := cur1.Val + c
-//		cur.Next = &ListNode{Val: sum % 10}
-//		cur = cur.Next
-//		c = sum / 10
-//		cur1 = cur1.Next
-//	}
-//	for cur2 != nil {
-//		sum := cur2.Val + c
-//		cur.Next = &ListNode{Val: sum % 10}
-//		cur = cur.Next
-//		c = sum / 10
-//		cur2 = cur2.Next
-//	}
-//	if l3.Next == nil {
-//		l3.Next = &ListNode{Val: 0}
-//	}
-//	return l3
-//}
+func (l *LinkListH) RemoveDupMap() {
+	if l == nil || l.Next == nil {
+		return
+	}
+	cur := l.Next
+	exist := map[interface{}]struct{}{cur.Val: {}}
+	for cur.Next != nil {
+		next := cur.Next
+		if _, ok := exist[next.Val]; ok {
+			cur.Next = next.Next
+			next.Next = nil
+		} else {
+			cur = next
+			exist[next.Val] = struct{}{}
+		}
+	}
+	return
+}
+
+func (l *LinkListH) RemoveDupLoop() {
+	if l == nil || l.Next == nil {
+		return
+	}
+	var oCur = l.Next
+	for ; oCur != nil; oCur = oCur.Next {
+		iPre, iCur := oCur, oCur.Next
+		for iCur != nil {
+			if iCur.Val == oCur.Val {
+				iPre.Next = iCur.Next
+				iCur.Next = nil
+				iCur = iPre.Next
+			} else {
+				iPre = iCur
+				iCur = iCur.Next
+			}
+		}
+	}
+	return
+}

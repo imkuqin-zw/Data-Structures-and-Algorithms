@@ -154,3 +154,63 @@ func TestLinkListH(t *testing.T) {
 	fmt.Print("traverse: ")
 	l.Traverse()
 }
+
+func TestLinkListH_RemoveDupMap(t *testing.T) {
+	fn := func(args ...interface{}) *LinkListH {
+		l := new(LinkListH)
+		for _, val := range args {
+			l.InsertBack(val)
+		}
+		return l
+	}
+	tests := []struct {
+		name string
+		args *LinkListH
+		want string
+	}{
+		{"", fn(), ""},
+		{"", fn(1), "1"},
+		{"", fn(1, 2), "1,2"},
+		{"", fn(1, 1), "1"},
+		{"", fn(1, 1, 1, 1, 2, 2, 2, 3, 4, 4, 1, 2, 5, 6, 7, 7, 7, 7), "1,2,3,4,5,6,7"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			l := tt.args
+			l.RemoveDupMap()
+			if got := l.String(); got != tt.want {
+				t.Errorf("RemoveDupMap() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestLinkListH_RemoveDupLoop(t *testing.T) {
+	fn := func(args ...interface{}) *LinkListH {
+		l := new(LinkListH)
+		for _, val := range args {
+			l.InsertBack(val)
+		}
+		return l
+	}
+	tests := []struct {
+		name string
+		args *LinkListH
+		want string
+	}{
+		{"", fn(), ""},
+		{"", fn(1), "1"},
+		{"", fn(1, 2), "1,2"},
+		{"", fn(1, 1), "1"},
+		{"", fn(1, 1, 1, 1, 2, 2, 2, 3, 4, 4, 1, 2, 5, 6, 7, 7, 7, 7), "1,2,3,4,5,6,7"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			l := tt.args
+			l.RemoveDupLoop()
+			if got := l.String(); got != tt.want {
+				t.Errorf("RemoveDupLoop() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
