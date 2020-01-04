@@ -36,9 +36,9 @@ func Add(l1, l2 *ListNode) *ListNode {
 链表重新排序
 1,2,3,4,5,6,7,8 => 1,8,2,7,3,6,4,5
 */
-func Sort1(l1 *ListNode) *ListNode {
-	if l1 == nil || l1.Next == nil {
-		return l1
+func Sort1(l *ListNode) *ListNode {
+	if l == nil || l.Next == nil {
+		return l
 	}
 	fn := func(l1 *ListNode) *ListNode {
 		pre, slow, fast := l1, l1, l1
@@ -50,8 +50,8 @@ func Sort1(l1 *ListNode) *ListNode {
 		pre.Next = nil
 		return slow
 	}
-	l2 := (*LinkList)(fn(l1)).Reverse()
-	cur1, cur2 := l1, (*ListNode)(l2)
+	l2 := (*LinkList)(fn(l)).Reverse()
+	cur1, cur2 := l, (*ListNode)(l2)
 	for cur1.Next != nil {
 		next := cur2.Next
 		cur2.Next = cur1.Next
@@ -60,5 +60,102 @@ func Sort1(l1 *ListNode) *ListNode {
 		cur2 = next
 	}
 	cur1.Next = cur2
-	return l1
+	return l
+}
+
+func FindLastK(l *ListNode, k int) interface{} {
+	slow, fast := l, l
+	i := 0
+	for ; i < k && fast != nil; i++ {
+		fast = fast.Next
+	}
+	if i < k {
+		return nil
+	}
+	for fast != nil {
+		fast = fast.Next
+		slow = slow.Next
+	}
+	return slow.Val
+}
+
+func IsLoop(l *ListNode) *ListNode {
+	slow, fast := l, l
+	for fast != nil && fast.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+		if slow == fast {
+			return slow
+		}
+	}
+	return nil
+}
+
+func GetLoopNode(l *ListNode) *ListNode {
+	meet := IsLoop(l)
+	if meet == nil {
+		return nil
+	}
+	head := l
+	for head != meet {
+		head = head.Next
+		meet = meet.Next
+	}
+	return head
+}
+
+func SwapNeighboring(l **ListNode) {
+	if l == nil || (*l) == nil || (*l).Next == nil {
+		return
+	}
+	tmp := (*l).Next
+	(*l).Next = tmp.Next
+	tmp.Next = *l
+	*l = tmp
+	pre := (*l).Next
+	cur := pre.Next
+	for cur != nil && cur.Next != nil {
+		next := cur.Next
+		cur.Next = next.Next
+		next.Next = cur
+		pre.Next = next
+		pre = cur
+		cur = pre.Next
+	}
+	return
+}
+
+func MergeSortLink(l1 *ListNode, l2 *ListNode, cmp func(val1, val2 interface{}) int) *ListNode {
+	if l1 == nil {
+		return l2
+	}
+	if l2 == nil {
+		return l1
+	}
+	var (
+		head, pre, cur1, cur2 *ListNode
+	)
+	if cmp(l1.Val, l2.Val) <= 0 {
+		head, pre, cur1, cur2 = l1, l1, l1.Next, l2
+	} else {
+		head, pre, cur1, cur2 = l2, l2, l2.Next, l1
+	}
+	for cur1 != nil && cur2 != nil {
+		if cmp(cur1.Val, cur2.Val) <= 0 {
+			pre.Next = cur1
+			pre = cur1
+			cur1 = cur1.Next
+		} else {
+			pre.Next = cur2
+			pre = cur2
+			cur2 = cur2.Next
+		}
+	}
+	if cur1 != nil {
+		pre.Next = cur1
+	}
+	if cur2 != nil {
+		pre.Next = cur2
+	}
+	return head
 }

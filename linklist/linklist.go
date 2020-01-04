@@ -11,6 +11,13 @@ type ListNode struct {
 	Next *ListNode
 }
 
+func (n *ListNode) String() string {
+	if n == nil {
+		return ""
+	}
+	return fmt.Sprintf("%v", n.Val)
+}
+
 // LinkList is headless linked list
 type LinkList ListNode
 
@@ -150,6 +157,14 @@ func (l *LinkList) Size() int {
 type LinkListH struct {
 	size int
 	Next *ListNode
+}
+
+func (l *LinkListH) GetNodeByIndex(index int) *ListNode {
+	cur := l.Next
+	for i := 0; i < index && cur != nil; i++ {
+		cur = cur.Next
+	}
+	return cur
 }
 
 func (l *LinkListH) InsertAt(index int, val interface{}) {
