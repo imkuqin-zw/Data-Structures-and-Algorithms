@@ -67,3 +67,18 @@ func BTreeToDLink(b *BNode) *BNode {
 	}
 	return head
 }
+
+func FindParentNode(root, node1, node2 *BNode) *BNode {
+	if root == nil || node1.Data == root.Data || node2.Data == root.Data {
+		return root
+	}
+	l := FindParentNode(root.LChild, node1, node2)
+	r := FindParentNode(root.RChild, node1, node2)
+	if l == nil {
+		return r
+	}
+	if r == nil {
+		return l
+	}
+	return root
+}
