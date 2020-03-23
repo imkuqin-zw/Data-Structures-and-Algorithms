@@ -1,8 +1,9 @@
 package listQueue
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestQueue(t *testing.T) {
@@ -33,11 +34,11 @@ func TestQueue(t *testing.T) {
 			}
 			i := 0
 			for !q.Empty() {
-				assert.Equal(t, tt.want[i], q.traversal())
+				assert.Equal(t, tt.want[i], q.List())
 				i++
 				q.Dequeue()
 			}
-			assert.Equal(t, tt.want[i], q.traversal())
+			assert.Equal(t, tt.want[i], q.List())
 		})
 	}
 }

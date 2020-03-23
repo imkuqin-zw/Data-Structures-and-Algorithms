@@ -1,12 +1,13 @@
 package queue
 
 import (
-	"github.com/imkuqin-zw/Data-Structures-and-Algorithms/queue/arrayAqueue"
 	"testing"
+
+	"github.com/imkuqin-zw/Data-Structures-and-Algorithms/queue/arrayQueue"
 )
 
 func TestLoginQueue_Traversal(t *testing.T) {
-	q := &LoginQueue{queue: arrayAqueue.NewQueue()}
+	q := &LoginQueue{queue: arrayQueue.NewQueue()}
 	tests := []struct {
 		fn func()
 	}{

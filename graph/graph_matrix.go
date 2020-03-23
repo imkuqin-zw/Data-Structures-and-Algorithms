@@ -1,6 +1,6 @@
 package graph
 
-import "test/queue"
+import "github.com/imkuqin-zw/Data-Structures-and-Algorithms/queue/arrayQueue"
 
 type Matrix struct {
 	v []*Vertex
@@ -131,10 +131,10 @@ func (m *Matrix) VertexRemove(i int) *Vertex {
 
 // 广度优先遍历
 func (m *Matrix) bfs(i, clock int) {
-	que := queue.NewQueue()
+	que := arrayQueue.NewQueue()
 	m.SetVStatus(i, Discovered)
 	que.Enqueue(i)
-	for !que.Empty() {
+	for !que.IsEmpty() {
 		v := que.Dequeue().(int)
 		clock++
 		m.SetDTime(v, clock)

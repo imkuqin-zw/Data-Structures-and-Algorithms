@@ -1,4 +1,4 @@
-package arrayAqueue
+package arrayQueue
 
 import (
 	"fmt"

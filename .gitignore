@@ -16,9 +16,5 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-.idea/.gitignore
-.idea/misc.xml
-.idea/modules.xml
-.idea/test.iml
-.idea/vcs.xml
+.idea
 .vscode/

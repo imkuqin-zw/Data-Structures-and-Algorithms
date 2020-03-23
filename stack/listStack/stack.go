@@ -36,7 +36,6 @@ func (s *Stack) Push(val interface{}) {
 	}
 	s.top = node
 	s.length++
-	return
 }
 
 func (s *Stack) Pop() interface{} {

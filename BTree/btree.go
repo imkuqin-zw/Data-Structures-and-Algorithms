@@ -1,7 +1,7 @@
 package BTree
 
 import (
-	"github.com/imkuqin-zw/Data-Structures-and-Algorithms/queue/arrayAqueue"
+	"github.com/imkuqin-zw/Data-Structures-and-Algorithms/queue/arrayQueue"
 	"github.com/imkuqin-zw/Data-Structures-and-Algorithms/stack/listStack"
 )
 
@@ -33,7 +33,7 @@ func (b *BNode) LevelTraversal() []interface{} {
 	if b == nil {
 		return result
 	}
-	q := arrayAqueue.NewQueue()
+	q := arrayQueue.NewQueue()
 	q.Enqueue(b)
 	for !q.IsEmpty() {
 		node := q.Dequeue().(*BNode)

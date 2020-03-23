@@ -11,6 +11,5 @@ func TestWordDictionary_AddWord(t *testing.T) {
 	for _, item := range words {
 		wt.AddWord(item)
 	}
-	childs := wt.Children
 	fmt.Println(wt.Search(".a"))
 }

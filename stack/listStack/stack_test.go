@@ -87,11 +87,11 @@ func TestStack_Pop(t *testing.T) {
 		}
 		s.Traversal()
 		for {
-			node := s.Pop()
-			if node == nil {
+			data := s.Pop()
+			if data == nil {
 				break
 			}
-			fmt.Print(node.Data, " ")
+			fmt.Print(data, " ")
 		}
 		fmt.Println()
 		fmt.Println(s.length)
