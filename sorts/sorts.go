@@ -42,43 +42,76 @@ func BubbleSort(data []int) {
 	}
 }
 
-func merge(data []int, s, m, e int) {
-	n1 := m - s + 1
-	n2 := e - m
-	l := make([]int, n1)
-	r := make([]int, n2)
-	for i, k := 0, 0; i < n1; i, k = i+1, k+1 {
-		l[i] = data[k]
-	}
-	for i, k := 0, m+1; i < n2; i, k = i+1, k+1 {
-		r[i] = data[k]
-	}
-	var i, j, k int
-	for k = s; i < n1 && j < n2; k++ {
-		if l[i] <= r[j] {
-			data[k] = l[i]
-			i++
-		} else {
-			data[k] = r[j]
-			j++
+func MergeSort(data []int, s, e int) {
+	merge := func(data []int, s, m, e int) {
+		lenL := m - s + 1
+		lenR := e - m
+		l := make([]int, lenL)
+		r := make([]int, lenR)
+		copy(l, data[s:m+1])
+		copy(r, data[m+1:e+1])
+		var i, j, k int
+		for k = s; i < lenL && j < lenR; k++ {
+			if l[i] <= r[j] {
+				data[k] = l[i]
+				i++
+			} else {
+				data[k] = r[j]
+				j++
+			}
+		}
+		if i < lenL {
+			copy(data[k:e+1], l[i:])
+		} else if j < lenR {
+			copy(data[k:e+1], r[j:])
 		}
 	}
-	for ; i < n1; k++ {
-		data[k] = l[i]
-		i++
-	}
-	for ; j < n2; k++ {
-		data[k] = r[j]
-		j++
-	}
-}
-
-func MergeSort(data []int, s, e int) {
-
 	if s < e {
 		m := (s + e) / 2
 		MergeSort(data, s, m)
 		MergeSort(data, m+1, e)
 		merge(data, s, m, e)
+	}
+}
+
+func QuickSort(data []int, low, high int) {
+	if low >= high {
+		return
+	}
+	i, j, index := low, high, data[low]
+	for i < j {
+		for i < j && data[j] >= index {
+			j--
+		}
+		if i < j {
+			data[i] = data[j]
+			i++
+		}
+		for i < j && data[i] < index {
+			i++
+		}
+		if i < j {
+			data[j] = data[i]
+			j--
+		}
+	}
+	data[i] = index
+	QuickSort(data, low, i)
+	QuickSort(data, i+1, high)
+}
+
+func ShellSort(data []int) {
+	length := len(data)
+	for skip := length / 2; skip > 0; skip /= 2 {
+		for i := skip; i < length; i++ {
+			j, tmp := i, data[i]
+			for j >= skip && data[j-skip] > tmp {
+				data[j] = data[j-skip]
+				j -= skip
+			}
+			if j != j-skip {
+				data[j] = tmp
+			}
+		}
 	}
 }
