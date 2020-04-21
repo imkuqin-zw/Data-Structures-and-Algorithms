@@ -1,4 +1,4 @@
-package BTree
+package binary_tree
 
 import (
 	"reflect"

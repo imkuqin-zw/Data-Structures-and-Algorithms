@@ -1,4 +1,4 @@
-package BTree
+package binary_tree
 
 import "github.com/imkuqin-zw/Data-Structures-and-Algorithms/stack/listStack"
 

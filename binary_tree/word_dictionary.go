@@ -1,4 +1,4 @@
-package BTree
+package binary_tree
 
 type WordDictionary struct {
 	IsEnd    bool
