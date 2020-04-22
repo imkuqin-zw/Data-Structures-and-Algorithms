@@ -1,8 +1,9 @@
 package heap
 
 import (
-	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func cmp(a, b interface{}) int {
@@ -15,31 +16,29 @@ func cmp(a, b interface{}) int {
 	}
 }
 
-func TestHeap_heap(t *testing.T) {
+func TestHeap_PushPop(t *testing.T) {
 	tests := []struct {
 		name string
 		args []int
-		want []int
+		want []interface{}
 	}{
-		{name: "", args: []int{1, 2, 3, 5, 9, 7}, want: []int{}},
+		{name: "", args: []int{1, 2, 3, 5, 9, 7}, want: []interface{}{9, 7, 5, 3, 2, 1}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			h := New(cmp, 0)
 			for _, e := range tt.args {
-				h.Insert(e)
+				h.Push(e)
 			}
-			fmt.Println(h.elems[1:])
-			fmt.Print("delete: ")
+			result := make([]interface{}, 0)
 			for {
-				result := h.DelMax()
-				if result == nil {
+				e := h.Pop()
+				if e == nil {
 					break
 				}
-				fmt.Print(result, " ")
+				result = append(result, e)
 			}
-			fmt.Println()
-			fmt.Println(h.elems[1:])
+			assert.Equal(t, result, tt.want)
 		})
 	}
 }
@@ -57,15 +56,10 @@ func TestHeap_Sort(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			h := New(cmp, 0)
 			for _, e := range tt.args {
-				h.Insert(e)
+				h.Push(e)
 			}
 			got := h.Sort()
-			for i, num := range got {
-				if num != tt.want[i] {
-					t.Errorf("Sort() = %v, want %v", got, tt.want)
-					break
-				}
-			}
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }

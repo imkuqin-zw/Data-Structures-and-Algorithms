@@ -1,7 +1,9 @@
 package heap
 
-type Heap struct {
+type IndexPriorityQueue struct {
 	elems []interface{}
+	pq    []int
+	qp    []int
 	n     int
 	cmp   func(a, b interface{}) int
 }
@@ -14,7 +16,7 @@ func New(cmp func(a, b interface{}) int, capacity int) *Heap {
 	}
 }
 
-func (h *Heap) Pop() interface{} {
+func (h *IndexPriorityQueue) Pop() interface{} {
 	if h.n == 0 {
 		return nil
 	}
@@ -26,14 +28,17 @@ func (h *Heap) Pop() interface{} {
 	return max
 }
 
-func (h *Heap) Push(e interface{}) {
+func (h *IndexPriorityQueue) Push(e interface{}) int {
 	h.elems = append(h.elems, e)
+	h.pq = append(h.pq, h.n)
+	index := h.n
 	h.n++
 	h.swim(h.n)
+	return index
 }
 
 // 排序
-func (h *Heap) Sort() []interface{} {
+func (h *IndexPriorityQueue) Sort() []interface{} {
 	i := h.n
 	for i > 1 {
 		h.exchange(1, i)
@@ -43,24 +48,24 @@ func (h *Heap) Sort() []interface{} {
 	return h.elems[1:]
 }
 
-func (h *Heap) IsEmpty() bool {
+func (h *IndexPriorityQueue) IsEmpty() bool {
 	return h.n == 0
 }
 
-func (h *Heap) Size() int {
+func (h *IndexPriorityQueue) Size() int {
 	return h.n
 }
 
-func (h *Heap) less(i, j int) bool {
+func (h *IndexPriorityQueue) less(i, j int) bool {
 	return h.cmp(h.elems[i], h.elems[j]) < 0
 }
 
-func (h *Heap) exchange(i, j int) {
+func (h *IndexPriorityQueue) exchange(i, j int) {
 	h.elems[i], h.elems[j] = h.elems[j], h.elems[i]
 }
 
 // 上浮
-func (h *Heap) swim(i int) {
+func (h *IndexPriorityQueue) swim(i int) {
 	j := i / 2
 	for j > 0 && h.less(j, i) {
 		h.exchange(i, j)
@@ -70,7 +75,7 @@ func (h *Heap) swim(i int) {
 }
 
 // 下沉
-func (h *Heap) sink(i int, n int) {
+func (h *IndexPriorityQueue) sink(i int, n int) {
 	for l := 2 * i; l <= n; l = 2 * i {
 		max := l
 		r := l + 1
