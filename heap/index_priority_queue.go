@@ -1,5 +1,7 @@
 package heap
 
+import "container/list"
+
 type IndexPriorityQueue struct {
 	elems []interface{}
 	pq    []int
@@ -88,4 +90,59 @@ func (h *IndexPriorityQueue) sink(i int, n int) {
 		h.exchange(i, max)
 		i = max
 	}
+}
+
+func mySqrt(x int) int {
+	l := 0
+	r := x
+	result := -1
+	for l <= r {
+		mid := (r + l) / 2
+		if mid*mid <= x {
+			result = mid
+			l = mid + 1
+		} else {
+			r = mid - 1
+		}
+	}
+	return result
+}
+
+func numIslands(grid [][]byte) int {
+	type point struct {
+		x, y int
+	}
+	num := 0
+	q := list.New()
+	for i := 0; i < len(grid); i++ {
+		for j := 0; j < len(grid[i]); j++ {
+			if grid[i][j] == 1 {
+				num++
+				grid[i][j] = 0
+				q.PushBack(&point{i, j})
+				for q.Len() > 0 {
+					e := q.Front()
+					q.Remove(e)
+					p := e.Value.(*point)
+					if p.x+1 < len(grid) && grid[p.x+1][p.y] == 1 {
+						grid[p.x+1][p.y] = 0
+						q.PushBack(&point{p.x + 1, p.y})
+					}
+					if p.x-1 >= 0 && grid[p.x-1][p.y] == 1 {
+						grid[p.x-1][p.y] = 0
+						q.PushBack(&point{p.x - 1, p.y})
+					}
+					if p.y+1 < len(grid[p.x]) && grid[p.x][p.y+1] == 1 {
+						grid[p.x][p.y+1] = 0
+						q.PushBack(&point{p.x, p.y + 1})
+					}
+					if p.y-1 >= 0 && grid[p.x][p.y-1] == 1 {
+						grid[p.x][p.y-1] = 0
+						q.PushBack(&point{p.x, p.y - 1})
+					}
+				}
+			}
+		}
+	}
+	return num
 }

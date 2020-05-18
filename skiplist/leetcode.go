@@ -120,11 +120,6 @@ func (this *Skiplist) Erase(num int) bool {
 	return false
 }
 
-//["Skiplist","add","add","add","add","add","add","add","add","add","erase","search","add","erase","erase","erase","add","search","search","search","erase","search","add","add","add","erase","search","add","search","erase","search","search","erase","erase","add","erase","search","erase","erase","search","add","add","erase","erase","erase","add","erase","add","erase","erase","add","add","add","search","search","add","erase","search","add","add","search","add","search","erase","erase","search","search","erase","search","add","erase","search","erase","search","erase","erase","search","search","add","add","add","add","search","search","search","search","search","search","search","search","search"]
-//70
-//[null,null,null,null,null,null,null,null,null,null,true,false,null,true,false,false,null,true,true,true,true,false,null,null,null,false,false,null,false,false,true,true,false,false,null,true,true,false,true,true,null,null,false,true,false,null,true,null,true,true,null,null,null,false,false,null,true,false,null,null,true,null,false,false,false,true,true,false,false,null,true,false,false,false,false,true,false,false,null,null,null,null,true,true,true,true,true,true,false,false,true]
-//[null,null,null,null,null,null,null,null,null,null,true,false,null,true,false,false,null,true,true,true,true,false,null,null,null,false,false,null,false,false,true,true,false,false,null,true,true,false,true,true,null,null,false,true,false,null,true,null,true,true,null,null,null,false,false,null,true,false,null,null,true,null,false,false,false,true,true,false,true,null,true,false,false,false,true,true,false,false,null,null,null,null,true,true,true,true,true,true,false,false,true]
-
 func (this *Skiplist) println() {
 	for i := this.level; i >= 0; i-- {
 		p := this.head
@@ -136,4 +131,54 @@ func (this *Skiplist) println() {
 		fmt.Println()
 	}
 	fmt.Println("------------------------")
+}
+
+func max(i, j int) int {
+	if i > j {
+		return i
+	}
+	return j
+}
+
+func maximalSquare(matrix [][]byte) int {
+	maxSide := 0
+	dp := make([][]int, len(matrix))
+	for i := 0; i < len(matrix); i++ {
+		dp[i] = make([]int, len(matrix[i]))
+		for j := 0; j < len(matrix[i]); j++ {
+			if matrix[i][j] == '1' {
+				if i == 0 || j == 0 {
+					dp[i][j] = 1
+				} else {
+					dp[i][j] = min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1
+				}
+				maxSide = max(maxSide, dp[i][j])
+			}
+		}
+	}
+	return maxSide
+}
+
+func min(i, j, k int) int {
+	m := i
+	if m > j {
+		m = j
+	}
+	if m > k {
+		m = k
+	}
+	return m
+}
+
+func climbStairs(n int) int {
+	if n <= 2 {
+		return 1
+	}
+	dp := make([]int, n+1)
+	dp[1] = 1
+	dp[2] = 2
+	for i := 3; i <= n; i++ {
+		dp[i] = max(dp[i-1], dp[i-2]) + 1
+	}
+	return dp[n]
 }
