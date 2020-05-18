@@ -1,6 +1,6 @@
 package main
 
-// AVL is
+// AVLTree is
 type AVL struct {
 	data   int
 	height int
