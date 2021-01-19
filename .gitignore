@@ -16,5 +16,15 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-.idea
-.vscode/
+.gitignore
+.idea/.gitignore
+.idea/Data-Structures-and-Algorithms.iml
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+.idea/dataSources/
+.idea/dictionaries/
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+data_structure/queue/
+stack/
