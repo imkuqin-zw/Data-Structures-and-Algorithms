@@ -47,7 +47,9 @@ func (g *AMGraph) AddEdge(from, to AMGVexType, val AMGEdgeType) {
 	g.Edge[i][j] = val
 	if !g.Directed {
 		g.Edge[j][i] = val
+		g.EdgeNum++
 	}
+	g.EdgeNum++
 }
 
 func (g *AMGraph) Print() {
