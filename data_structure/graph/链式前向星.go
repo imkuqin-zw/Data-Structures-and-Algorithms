@@ -3,7 +3,11 @@ package graph
 import "fmt"
 
 type CFSEdge struct {
-	To, Next, W int
+	From, To, Next, W int
+}
+
+func (c *CFSEdge) String() string {
+	return fmt.Sprintf("%d-->%d:%d", c.From, c.To, c.W)
 }
 
 type CFSGraph struct {
@@ -22,7 +26,7 @@ func NewCFSGraph(vexNum int, directed bool) *CFSGraph {
 }
 
 func (g *CFSGraph) addEdge(f, t, w int) {
-	e := &CFSEdge{To: t, W: w}
+	e := &CFSEdge{From: f, To: t, W: w}
 	g.Edge = append(g.Edge, e)
 	idx := len(g.Edge) - 1
 	e.Next = g.Head[f]
