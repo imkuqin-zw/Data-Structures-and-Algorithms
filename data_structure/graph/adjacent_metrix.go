@@ -2,31 +2,26 @@ package graph
 
 import "fmt"
 
-type (
-	AMGVexType  byte
-	AMGEdgeType int
-)
-
 type AMGraph struct {
-	Vex      []AMGVexType
-	Edge     [][]AMGEdgeType
+	Vex      []interface{}
+	Edge     [][]int
 	EdgeNum  int
 	Directed bool
 }
 
-func NewAMGraph(vex []AMGVexType, directed bool) *AMGraph {
+func NewAMGraph(vex []interface{}, directed bool) *AMGraph {
 	g := &AMGraph{
 		Directed: directed,
 		Vex:      vex,
-		Edge:     make([][]AMGEdgeType, len(vex)),
+		Edge:     make([][]int, len(vex)),
 	}
 	for i := 0; i < len(vex); i++ {
-		g.Edge[i] = make([]AMGEdgeType, len(vex))
+		g.Edge[i] = make([]int, len(vex))
 	}
 	return g
 }
 
-func (g *AMGraph) FindVex(vex AMGVexType) int {
+func (g *AMGraph) FindVex(vex interface{}) int {
 	for i := 0; i < len(g.Vex); i++ {
 		if g.Vex[i] == vex {
 			return i
@@ -35,7 +30,7 @@ func (g *AMGraph) FindVex(vex AMGVexType) int {
 	return -1
 }
 
-func (g *AMGraph) AddEdge(from, to AMGVexType, val AMGEdgeType) {
+func (g *AMGraph) AddEdge(from, to interface{}, val int) {
 	i := g.FindVex(from)
 	if i == -1 {
 		return

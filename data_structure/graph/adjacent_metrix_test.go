@@ -3,7 +3,7 @@ package graph
 import "testing"
 
 func TestAMGraph(t *testing.T) {
-	g := NewAMGraph([]AMGVexType{'1', '2', '3', '4'}, false)
+	g := NewAMGraph([]interface{}{'1', '2', '3', '4'}, false)
 	g.AddEdge('1', '2', 5)
 	g.AddEdge('1', '4', 3)
 	g.AddEdge('2', '3', 8)
